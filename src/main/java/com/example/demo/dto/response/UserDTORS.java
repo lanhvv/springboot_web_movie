@@ -1,10 +1,10 @@
 package com.example.demo.dto.response;
 
-import java.util.Map;
+import java.util.List;
 
 public class UserDTORS {
     private String name;
-    private Map<String, String> roles;
+    private List<RoleDTORS> roles;
     private String token;
 
     public String getName() {
@@ -15,11 +15,11 @@ public class UserDTORS {
         this.name = name;
     }
 
-    public Map<String, String> getRoles() {
+    public List<RoleDTORS> getRoles() {
         return roles;
     }
 
-    public void setRoles(Map<String, String> roles) {
+    public void setRoles(List<RoleDTORS> roles) {
         this.roles = roles;
     }
 

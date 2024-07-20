@@ -1,7 +1,11 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.text.MessageFormat;
 import java.util.Set;
 
 @Entity(name = "user")
@@ -74,5 +78,15 @@ public class User extends CommonTable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+                .append("name", name)
+                .append("email", email)
+                .append("roles", roles.stream().map(role -> role.getSlug())
+                        .reduce("", (s, slug) -> MessageFormat.format(StringUtils.isEmpty(s) ? "{1}" : "{0}, {1}", s, slug)))
+                .toString();
     }
 }

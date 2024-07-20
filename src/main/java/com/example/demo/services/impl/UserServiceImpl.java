@@ -14,6 +14,8 @@ import com.example.demo.services.CommonTableService;
 import com.example.demo.services.UserService;
 import com.example.demo.utils.MessageUtils;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
@@ -65,6 +69,8 @@ public class UserServiceImpl implements UserService {
             throw new BusinessLogicException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), MessageUtils.EMAIL_EXITS, HttpStatus.BAD_REQUEST);
         }
 
+        this.logger.debug(user.toString());
+
         User userRegister = new User(
                 userDTORQ.getEmail(),
                 this.passwordEncoder.encode(userDTORQ.getPassword()),
@@ -73,6 +79,8 @@ public class UserServiceImpl implements UserService {
             );
         this.commonTableService.setInfoCommonTableNew(userRegister, userRegister.getEmail());
         this.userRepo.save(userRegister);
+
+        this.logger.info("Register successful");
     }
 
     @Transactional
@@ -85,8 +93,13 @@ public class UserServiceImpl implements UserService {
         if (!this.passwordEncoder.matches(loginDTORQ.getPassword(), user.getPassword())) {
             throw new BusinessLogicException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), MessageUtils.PASSWORD_INVALID, HttpStatus.BAD_REQUEST);
         }
+
+        this.logger.debug(user.toString());
+
         UserDTORS userDTORS = this.toDoUserMapper.UserToUserDTORS(user);
         userDTORS.setToken(this.jwtTokenProvider.generateToken(user.getEmail()));
+
+        this.logger.info("Login successful");
         return userDTORS;
     }
 }
