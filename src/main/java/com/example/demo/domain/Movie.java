@@ -83,10 +83,14 @@ public class Movie extends CommonTable{
     )
     private Set<User> users;
 
+    @OneToMany(mappedBy = Episode_.MOVIE)
+    private Set<Episode> episodes;
+
     public Movie() {
     }
 
-    public Movie(String name, String slug, String thumbURL, String posterURL, String time, String episodeCurrent, String episodeTotal, String lang, String year, Date date, String statusMovie, Set<Category> categories, Set<Typ> typs, Set<Country> countries, Set<Actor> actors, Set<Director> directors) {
+    public Movie(Long id, String name, String slug, String thumbURL, String posterURL, String time, String episodeCurrent, String episodeTotal, String lang, String year, Date date, String statusMovie, Set<Category> categories, Set<Typ> typs, Set<Country> countries, Set<Actor> actors, Set<Director> directors, Set<User> users, Set<Episode> episodes) {
+        this.id = id;
         this.name = name;
         this.slug = slug;
         this.thumbURL = thumbURL;
@@ -103,6 +107,8 @@ public class Movie extends CommonTable{
         this.countries = countries;
         this.actors = actors;
         this.directors = directors;
+        this.users = users;
+        this.episodes = episodes;
     }
 
     public void setId(Long id) {
@@ -247,5 +253,13 @@ public class Movie extends CommonTable{
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(Set<Episode> episodes) {
+        this.episodes = episodes;
     }
 }
