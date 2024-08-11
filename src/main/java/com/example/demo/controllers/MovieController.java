@@ -19,9 +19,9 @@ public class MovieController {
     /*
     * note
     * rest api get body is array, then site request also require array */
-    @PostMapping("/create")
+    @GetMapping("/create")
     public ResponseEntity<Object> create() {
 //        this.movieService.create(slugs);
-        return null;
+        return ResponseEntity.ok(null);
     }
 }

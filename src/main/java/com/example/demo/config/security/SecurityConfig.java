@@ -58,8 +58,8 @@ public class SecurityConfig  {
             authorMatcher
                     .requestMatchers(PathUtils.ROOT + PathUtils.LOGIN).permitAll()
                     .requestMatchers(PathUtils.ROOT + PathUtils.REGISTER).permitAll()
-                    .requestMatchers(PathUtils.ROOT + "/**").hasAnyAuthority("ADMIN", "USER", "SYSTEM")
-                    .anyRequest().authenticated()
+                    .requestMatchers(PathUtils.ROOT + "/**").permitAll()
+//                    .anyRequest().authenticated()
         ).authenticationProvider(this.authenticationProvider())
         .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)   //  JWT
         .httpBasic(Customizer.withDefaults());
