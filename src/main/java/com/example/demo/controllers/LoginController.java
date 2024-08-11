@@ -28,7 +28,7 @@ public class LoginController {
     @PostMapping(PathUtils.REGISTER)
     public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTORQ userDTORQ) {
         this.userService.register(userDTORQ);
-        return  ResponseEntity.status(HttpStatus.OK).body(null); // method body có formal type :))
+        return  ResponseEntity.status(HttpStatus.OK).body(null); // method body có formal type để convert :))
     }
 
     @PostMapping(PathUtils.LOGIN)

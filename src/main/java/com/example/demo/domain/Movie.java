@@ -43,13 +43,7 @@ public class Movie extends CommonTable{
     )
     private Set<Category> categories;
 
-    @ManyToMany
-    @JoinTable(
-            name = "typ_movie",
-            joinColumns = {@JoinColumn(name = "movie_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "typ_id", referencedColumnName = "id")}
-    )
-    private Set<Typ> typs;
+    private String typeMovie;
 
     @ManyToMany
     @JoinTable(
@@ -83,13 +77,14 @@ public class Movie extends CommonTable{
     )
     private Set<User> users;
 
-    @OneToMany(mappedBy = Episode_.MOVIE)
+    // error Episode_.Movie dont use
+    @OneToMany(mappedBy = "movie")
     private Set<Episode> episodes;
 
     public Movie() {
     }
 
-    public Movie(Long id, String name, String slug, String thumbURL, String posterURL, String time, String episodeCurrent, String episodeTotal, String lang, String year, Date date, String statusMovie, Set<Category> categories, Set<Typ> typs, Set<Country> countries, Set<Actor> actors, Set<Director> directors, Set<User> users, Set<Episode> episodes) {
+    public Movie(Long id, String name, String slug, String thumbURL, String posterURL, String time, String episodeCurrent, String episodeTotal, String lang, String year, Date date, String statusMovie, Set<Category> categories, String typeMovie, Set<Country> countries, Set<Actor> actors, Set<Director> directors, Set<User> users, Set<Episode> episodes) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -103,7 +98,7 @@ public class Movie extends CommonTable{
         this.date = date;
         this.statusMovie = statusMovie;
         this.categories = categories;
-        this.typs = typs;
+        this.typeMovie = typeMovie;
         this.countries = countries;
         this.actors = actors;
         this.directors = directors;
@@ -215,12 +210,12 @@ public class Movie extends CommonTable{
         this.categories = categories;
     }
 
-    public Set<Typ> getTyps() {
-        return typs;
+    public String getTypeMovie() {
+        return typeMovie;
     }
 
-    public void setTyps(Set<Typ> typs) {
-        this.typs = typs;
+    public void setTypeMovie(String typeMovie) {
+        this.typeMovie = typeMovie;
     }
 
     public Set<Country> getCountries() {

@@ -1,4 +1,4 @@
-package com.example.demo.client.response;
+package com.example.demo.client.response.apii_nguonc_movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

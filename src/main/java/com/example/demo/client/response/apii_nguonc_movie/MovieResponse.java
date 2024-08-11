@@ -1,4 +1,4 @@
-package com.example.demo.client.response;
+package com.example.demo.client.response.apii_nguonc_movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -23,13 +23,15 @@ public class MovieResponse {
     private String year;
     private List<String> actor;
     private List<String> director;
-    private List<CategoryResponse> category;
-    private List<EpisodeResponse> episodes;
+    private String type;
+    private List<TypeTextResponse> category;
+    private List<TypeTextResponse> country;
+
 
     public MovieResponse() {
     }
 
-    public MovieResponse(String name, String slug, String originName, String content, String thumbUrl, String posterUrl, String time, String episodeCurrent, String episodeTotal, String lang, String year, List<String> actor, List<String> director, List<CategoryResponse> category, List<EpisodeResponse> episodes) {
+    public MovieResponse(String name, String slug, String originName, String content, String thumbUrl, String posterUrl, String time, String episodeCurrent, String episodeTotal, String lang, String year, List<String> actor, List<String> director, String type, List<TypeTextResponse> category, List<TypeTextResponse> country) {
         this.name = name;
         this.slug = slug;
         this.originName = originName;
@@ -43,8 +45,9 @@ public class MovieResponse {
         this.year = year;
         this.actor = actor;
         this.director = director;
+        this.type = type;
         this.category = category;
-        this.episodes = episodes;
+        this.country = country;
     }
 
     public String getName() {
@@ -151,19 +154,30 @@ public class MovieResponse {
         this.director = director;
     }
 
-    public List<CategoryResponse> getCategory() {
+    public List<TypeTextResponse> getCategory() {
         return category;
     }
 
-    public void setCategory(List<CategoryResponse> category) {
+    public void setCategory(List<TypeTextResponse> category) {
         this.category = category;
     }
 
-    public List<EpisodeResponse> getEpisodes() {
-        return episodes;
+
+    public List<TypeTextResponse> getCountry() {
+        return country;
     }
 
-    public void setEpisodes(List<EpisodeResponse> episodes) {
-        this.episodes = episodes;
+    public void setCountry(List<TypeTextResponse> country) {
+        this.country = country;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
 }

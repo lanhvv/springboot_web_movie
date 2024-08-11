@@ -1,13 +1,13 @@
-package com.example.demo.client.response;
+package com.example.demo.client.response.apii_nguonc_movie;
 
-public class CategoryResponse {
+public class TypeTextResponse {
     private String name;
     private String slug;
 
-    public CategoryResponse() {
+    public TypeTextResponse() {
     }
 
-    public CategoryResponse(String name, String slug) {
+    public TypeTextResponse(String name, String slug) {
         this.name = name;
         this.slug = slug;
     }

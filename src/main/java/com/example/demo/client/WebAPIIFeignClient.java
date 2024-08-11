@@ -1,6 +1,6 @@
 package com.example.demo.client;
 
-import com.example.demo.client.response.MovieApiiResponse;
+import com.example.demo.client.response.apii_nguonc_movie.MovieApiiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
