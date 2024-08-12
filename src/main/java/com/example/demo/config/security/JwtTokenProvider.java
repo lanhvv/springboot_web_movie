@@ -1,9 +1,11 @@
 package com.example.demo.config.security;
 
+import com.example.demo.config.exception.policy.BusinessLogicException;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -44,10 +46,8 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String authToken) {
-
-            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
-            return true;
-
+        Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
+        return true;
     }
 
     public String getJwtFromRequest(HttpServletRequest request) {

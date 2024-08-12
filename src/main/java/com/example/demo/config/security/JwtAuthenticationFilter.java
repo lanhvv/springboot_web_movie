@@ -1,11 +1,15 @@
 package com.example.demo.config.security;
 
+import com.example.demo.config.exception.policy.BusinessLogicException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,11 +53,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     // tránh nhầm lẫn <điều quan trọng nhắc 2 lần vì sau khi học lại do không ôn lại quên>
                 }
             }
+            filterChain.doFilter(request, response);
         } catch (Exception ex) {
             log.error("failed on set user authentication", ex);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
-
-        filterChain.doFilter(request, response);
     }
 
 }

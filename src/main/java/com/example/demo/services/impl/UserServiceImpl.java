@@ -14,12 +14,12 @@ import com.example.demo.services.CommonTableService;
 import com.example.demo.services.UserService;
 import com.example.demo.utils.MessageUtils;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,11 +65,10 @@ public class UserServiceImpl implements UserService {
                 }).collect(Collectors.toSet());
 
 
-        if (!ObjectUtils.isEmpty(user)) {
+        if (ObjectUtils.isNotEmpty(user)) {
+            this.logger.debug(user.toString());
             throw new BusinessLogicException(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), MessageUtils.EMAIL_EXITS, HttpStatus.BAD_REQUEST);
         }
-
-        this.logger.debug(user.toString());
 
         User userRegister = new User(
                 userDTORQ.getEmail(),
@@ -77,6 +76,9 @@ public class UserServiceImpl implements UserService {
                 userDTORQ.getName(),
                 roles
             );
+
+        this.logger.debug(userRegister.toString());
+
         this.commonTableService.setInfoCommonTableNew(userRegister, userRegister.getEmail());
         this.userRepo.save(userRegister);
 
