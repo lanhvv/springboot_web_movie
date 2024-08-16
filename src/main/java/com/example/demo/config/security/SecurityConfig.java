@@ -1,6 +1,7 @@
 package com.example.demo.config.security;
 
 import com.example.demo.utils.PathUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +57,13 @@ public class SecurityConfig  {
         authenticationManagerBuilder.authenticationProvider(this.authenticationProvider());
 
         http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(AbstractHttpConfigurer::disable);
+        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(request -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(Arrays.asList("*"));
+            configuration.setAllowedMethods(Arrays.asList("*"));
+            configuration.setAllowedHeaders(Arrays.asList("*"));
+            return configuration;
+        }));
         http.authorizeHttpRequests(authorMatcher ->
             authorMatcher
                     .requestMatchers(PathUtils.ROOT + PathUtils.LOGIN).permitAll()
@@ -61,6 +71,7 @@ public class SecurityConfig  {
                     .requestMatchers(PathUtils.ROOT + "/**").permitAll()
 //                    .anyRequest().authenticated()
         ).authenticationProvider(this.authenticationProvider())
+                .exceptionHandling(exceptionHand -> exceptionHand.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "dm")))
         .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)   //  JWT
         .httpBasic(Customizer.withDefaults());
 
