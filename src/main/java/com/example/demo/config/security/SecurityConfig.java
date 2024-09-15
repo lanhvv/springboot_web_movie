@@ -57,6 +57,7 @@ public class SecurityConfig  {
         authenticationManagerBuilder.authenticationProvider(this.authenticationProvider());
 
         http.csrf(AbstractHttpConfigurer::disable);
+        // setup CORS
         http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(request -> {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOrigins(Arrays.asList("*"));
@@ -64,11 +65,12 @@ public class SecurityConfig  {
             configuration.setAllowedHeaders(Arrays.asList("*"));
             return configuration;
         }));
+
         http.authorizeHttpRequests(authorMatcher ->
             authorMatcher
                     .requestMatchers(PathUtils.ROOT + PathUtils.LOGIN).permitAll()
                     .requestMatchers(PathUtils.ROOT + PathUtils.REGISTER).permitAll()
-                    .requestMatchers(PathUtils.ROOT + "/**").permitAll()
+                    .requestMatchers(PathUtils.ROOT + "/**").authenticated()
 //                    .anyRequest().authenticated()
         ).authenticationProvider(this.authenticationProvider())
                 .exceptionHandling(exceptionHand -> exceptionHand.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "dm")))

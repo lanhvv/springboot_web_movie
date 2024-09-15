@@ -1,13 +1,13 @@
-package com.example.demo.client.response.apii_nguonc_movie;
+package com.example.demo.dto.request;
 
-public class TypeTextResponse {
+public class CategoryDTORQ {
     private String name;
     private String slug;
 
-    public TypeTextResponse() {
+    public CategoryDTORQ() {
     }
 
-    public TypeTextResponse(String name, String slug) {
+    public CategoryDTORQ(String name, String slug) {
         this.name = name;
         this.slug = slug;
     }

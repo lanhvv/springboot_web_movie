@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class Movie extends CommonTable{
 
     private String posterURL;
 
-    private String time;
+    private Integer time;
 
     private String episodeCurrent;
 
@@ -30,8 +31,6 @@ public class Movie extends CommonTable{
 
     private String year;
 
-    @Temporal(TemporalType.DATE)
-    private Date date;
 
     private String statusMovie;
 
@@ -84,7 +83,7 @@ public class Movie extends CommonTable{
     public Movie() {
     }
 
-    public Movie(Long id, String name, String slug, String thumbURL, String posterURL, String time, String episodeCurrent, String episodeTotal, String lang, String year, Date date, String statusMovie, Set<Category> categories, String typeMovie, Set<Country> countries, Set<Actor> actors, Set<Director> directors, Set<User> users, Set<Episode> episodes) {
+    public Movie(Long id, String name, String slug, String thumbURL, String posterURL, Integer time, String episodeCurrent, String episodeTotal, String lang, String year, String statusMovie, Set<Category> categories, String typeMovie, Set<Country> countries, Set<Actor> actors, Set<Director> directors, Set<User> users, Set<Episode> episodes) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -95,7 +94,6 @@ public class Movie extends CommonTable{
         this.episodeTotal = episodeTotal;
         this.lang = lang;
         this.year = year;
-        this.date = date;
         this.statusMovie = statusMovie;
         this.categories = categories;
         this.typeMovie = typeMovie;
@@ -106,12 +104,12 @@ public class Movie extends CommonTable{
         this.episodes = episodes;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -146,11 +144,11 @@ public class Movie extends CommonTable{
         this.posterURL = posterURL;
     }
 
-    public String getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -184,14 +182,6 @@ public class Movie extends CommonTable{
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getStatusMovie() {

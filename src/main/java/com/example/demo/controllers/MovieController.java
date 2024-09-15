@@ -10,11 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping(PathUtils.ROOT + "/movie")
 public class MovieController {
-    private final MovieService movieService;
+//    private final MovieService movieService;
 
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
+//    public MovieController(MovieService movieService) {
+//        this.movieService = movieService;
+//    }
 
     /*
     * note
@@ -22,6 +22,11 @@ public class MovieController {
     @GetMapping("/create")
     public ResponseEntity<Object> create() {
 //        this.movieService.create(slugs);
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<Object> get() {
         return ResponseEntity.ok(null);
     }
 }
